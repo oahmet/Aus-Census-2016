@@ -1,0 +1,68 @@
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>A Map of Information</title>
+    <link href="https://google-developers.appspot.com/maps/documentation/javascript/examples/default.css" rel="stylesheet">
+
+    <!-- If you are in China, you may need to use theis site for the Google Maps code
+    <script src="https://maps.google.cn/maps/api/js" type="text/javascript"></script> -->
+
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
+    <script src="https://unpkg.com/@google/markerclustererplus@4.0.1/dist/markerclustererplus.min.js"></script>
+    <script src="where.js"></script>
+    <script>
+
+      function initialize() {
+        alert("To see the title of a marker, hover over the marker but don't click.");
+        var myLatlng = new google.maps.LatLng(-28.024, 140.887) // austrlia
+        var mapOptions = {
+          zoom: 4,
+          center: myLatlng,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        }
+        var map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
+
+        var image = {
+          url: 'https://www.pngkit.com/png/detail/19-199948_house-icon-home-icon-light-green.png',
+          // This marker is 20 pixels wide by 32 pixels high.
+          size: new google.maps.Size(120, 120),
+          // The origin for this image is (0, 0).
+          origin: new google.maps.Point(0, 0),
+          // The anchor for this image is the base of the flagpole at (0, 32).
+          anchor: new google.maps.Point(0, 32)
+        };
+
+        i = 0;
+        var markers = [];
+        for ( pos in myData ) {
+            i = i + 1;
+            var row = myData[pos];
+		    window.console && console.log(row);
+            // if ( i < 3 ) { alert(row); }
+            var newLatlng = new google.maps.LatLng(row[0], row[1]);
+            var marker = new google.maps.Marker({
+                position: newLatlng,
+                map: map,
+                title: row[2],
+                label: row[3]
+            });
+            markers.push(marker);
+<!-- New options for MarkerClusterer function to display markers -->
+	    var options = {
+			imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
+			}
+        }
+<!-- New var -->
+	var markerCluster = new MarkerClusterer(map, markers, options);
+      }
+    </script>
+  </head>
+  <body onload="initialize()">
+<div id="map_canvas" style="height: 800px"></div>
+<p><b>About this Map</b></p>
+<p>
+ABS data used with permission from the Australian Bureau of Statistics.
+</p>
+</body>
+</html>
